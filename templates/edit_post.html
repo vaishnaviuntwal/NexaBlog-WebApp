@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body p-4">
+          <h2 class="card-title text-center mb-4">
+            <i class="fas fa-edit me-2"></i>Edit Post
+          </h2>
+          
+          <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label class="form-label">Title</label>
+              <input type="text" name="title" class="form-control" value="{{ post.title }}" required>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label">Content</label>
+              <textarea name="content" class="form-control" rows="8" required>{{ post.content }}</textarea>
+            </div>
+            
+            <div class="mb-4">
+              <label class="form-label">Update Image (Optional)</label>
+              <input type="file" name="image" class="form-control" accept="image/*">
+              <div class="form-text">Leave empty to keep current image</div>
+            </div>
+            
+            {% if post.image_file %}
+            <div class="mb-3 text-center">
+              <p class="text-muted mb-2">Current Image:</p>
+              <img src="{{ url_for('static', filename='post_pics/' + post.image_file) }}" 
+                   class="img-fluid rounded shadow" alt="Current post image" style="max-height: 300px;">
+            </div>
+            {% endif %}
+            
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-success">
+                <i class="fas fa-save me-2"></i>Update Post
+              </button>
+              <a href="{{ url_for('profile', user_id=current_user.id) }}" class="btn btn-outline-secondary">
+                <i class="fas fa-times me-2"></i>Cancel
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

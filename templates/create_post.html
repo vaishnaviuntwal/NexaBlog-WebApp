@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body p-4">
+          <h2 class="card-title text-center mb-4">
+            <i class="fas fa-edit me-2"></i>Create New Post
+          </h2>
+          
+          <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label class="form-label">Title</label>
+              <input type="text" class="form-control" name="title" placeholder="Enter post title" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Content</label>
+              <textarea class="form-control" name="content" rows="8" placeholder="Write your post content..." required></textarea>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Upload Image (Optional)</label>
+              <input type="file" class="form-control" name="image_file" accept="image/*" id="imageInput">
+              <div class="form-text">Supported formats: JPG, PNG, GIF. Max size: 16MB</div>
+            </div>
+
+            <div class="mb-3 text-center">
+              <div class="image-preview" id="previewImage" style="display: none;"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-2">
+              <i class="fas fa-paper-plane me-2"></i>Publish Post
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('imageInput').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById('previewImage');
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.innerHTML = `<img src="${e.target.result}" class="img-fluid rounded shadow" alt="Preview" style="max-height: 300px;">`;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        preview.style.display = 'none';
+        preview.innerHTML = '';
+    }
+});
+</script>
+{% endblock %}
